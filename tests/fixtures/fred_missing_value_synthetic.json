@@ -1,0 +1,20 @@
+{
+  "_synthetic": true,
+  "_note": "本文件为特性 005 自拟的合成样本，不是真实源数据，不构成任何证据。用于验证「缺失以具名原因表达、不得静默折算为 0」：`.` 与 null 两种形态都必须映射为具名缺失。",
+  "records": [
+    {
+      "series_id": "SOFR",
+      "date": "2026-08-14",
+      "value": ".",
+      "unit": "Percent",
+      "frequency": "daily"
+    },
+    {
+      "series_id": "DFF",
+      "date": "2026-08-14",
+      "value": null,
+      "unit": "Percent",
+      "frequency": "daily"
+    }
+  ]
+}
