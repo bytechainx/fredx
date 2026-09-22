@@ -89,7 +89,8 @@ pub fn documented_fred_evidence() -> FredAuthorizationEvidence {
 /// 5. 证据未过期（`valid_until` 已声明时，`as_of` MUST NOT 晚于它）
 /// 6. 请求模式 ∈ 覆盖模式集合
 ///
-/// `as_of` 由调用方传入，本层不读取系统时间。
+/// `as_of` 由调用方传入，本层不读取系统时间。判定先校验日期与有效区间，
+/// 拒绝早于签署日的评估日期，以及纯空白编号、签署者和范围说明。
 #[must_use]
 pub fn authorize_fred(
     evidence: Option<&FredAuthorizationEvidence>,
@@ -101,14 +102,32 @@ pub fn authorize_fred(
             reason: "缺少 Owner 签核证据".to_owned(),
         };
     };
-    if evidence.decision_id.is_empty() {
+    if evidence.decision_id.trim().is_empty() {
         return FredAuthorization::Denied {
             reason: "签核编号不明".to_owned(),
         };
     }
-    if evidence.signed_by.is_empty() {
+    if evidence.signed_by.trim().is_empty() {
         return FredAuthorization::Denied {
             reason: "签署者不明".to_owned(),
+        };
+    }
+    if evidence.scope_note.trim().is_empty() {
+        return FredAuthorization::Denied {
+            reason: "证据范围说明不明".into(),
+        };
+    }
+    if validate_date(&as_of).is_err() || validate_authorization_evidence(evidence).is_err() {
+        return FredAuthorization::Denied {
+            reason: "评估日期或证据有效区间非法".into(),
+        };
+    }
+    if evidence
+        .signed_at
+        .is_some_and(|signed_at| as_of < signed_at)
+    {
+        return FredAuthorization::Denied {
+            reason: "证据尚未签署生效".into(),
         };
     }
     if evidence.authorized_modes.is_empty() {
@@ -147,17 +166,25 @@ pub fn mode_label(mode: FredAccessMode) -> &'static str {
     }
 }
 
-/// 校验一份证据描述自身的形态（日期分量合法）。
+/// 校验一份证据描述自身的形态（日期合法且有效区间未倒置）。
 ///
 /// # Errors
 ///
-/// `signed_at` / `valid_until` 的日期分量非法时返回 [`crate::FredError::Invalid`]。
+/// `signed_at` / `valid_until` 的日期分量非法或签署日晚于到期日时返回 [`crate::FredError::Invalid`]。
 pub fn validate_authorization_evidence(evidence: &FredAuthorizationEvidence) -> FredResult<()> {
     if let Some(signed_at) = evidence.signed_at {
         validate_date(&signed_at)?;
     }
     if let Some(valid_until) = evidence.valid_until {
         validate_date(&valid_until)?;
+        if evidence
+            .signed_at
+            .is_some_and(|signed_at| signed_at > valid_until)
+        {
+            return Err(crate::FredError::Invalid(
+                "签署日期不得晚于有效期上界".into(),
+            ));
+        }
     }
     Ok(())
 }
@@ -249,5 +276,89 @@ mod tests {
             day: 30,
         });
         assert!(validate_authorization_evidence(&evidence).is_err());
+    }
+
+    #[test]
+    fn authorization_rejects_blank_metadata_and_invalid_dates() {
+        let valid = Date::new(2026, 9, 23).unwrap();
+        for blank in ["", "   ", "\u{3000}"] {
+            for field in 0..3 {
+                let mut e = documented_fred_evidence();
+                match field {
+                    0 => e.decision_id = blank.into(),
+                    1 => e.signed_by = blank.into(),
+                    _ => e.scope_note = blank.into(),
+                }
+                assert!(matches!(
+                    authorize_fred(Some(&e), FredAccessMode::Offline, valid),
+                    FredAuthorization::Denied { .. }
+                ));
+            }
+        }
+    }
+
+    #[test]
+    fn authorization_rechecks_dates_and_validity_interval() {
+        let valid = Date::new(2026, 9, 23).unwrap();
+        let bad = Date {
+            year: 2026,
+            month: 99,
+            day: 99,
+        };
+        let e = documented_fred_evidence();
+        assert!(matches!(
+            authorize_fred(Some(&e), FredAccessMode::Offline, bad),
+            FredAuthorization::Denied { .. }
+        ));
+        for field in 0..2 {
+            let mut e = documented_fred_evidence();
+            if field == 0 {
+                e.signed_at = Some(bad);
+            } else {
+                e.valid_until = Some(bad);
+            }
+            assert!(validate_authorization_evidence(&e).is_err());
+            assert!(matches!(
+                authorize_fred(Some(&e), FredAccessMode::Offline, valid),
+                FredAuthorization::Denied { .. }
+            ));
+        }
+        let mut e = documented_fred_evidence();
+        e.signed_at = Some(valid);
+        e.valid_until = Some(Date::new(2026, 9, 22).unwrap());
+        assert!(validate_authorization_evidence(&e).is_err());
+        e.valid_until = None;
+        assert!(matches!(
+            authorize_fred(
+                Some(&e),
+                FredAccessMode::Offline,
+                Date::new(2026, 9, 22).unwrap()
+            ),
+            FredAuthorization::Denied { .. }
+        ));
+        assert!(matches!(
+            authorize_fred(Some(&e), FredAccessMode::Offline, valid),
+            FredAuthorization::Authorized { .. }
+        ));
+    }
+
+    #[test]
+    fn authorization_accepts_inclusive_validity_bounds() {
+        let mut e = documented_fred_evidence();
+        let date = Date::new(2026, 9, 23).unwrap();
+        e.signed_at = Some(date);
+        e.valid_until = Some(date);
+        assert!(matches!(
+            authorize_fred(Some(&e), FredAccessMode::Offline, date),
+            FredAuthorization::Authorized { .. }
+        ));
+        assert!(matches!(
+            authorize_fred(
+                Some(&e),
+                FredAccessMode::Offline,
+                Date::new(2026, 9, 24).unwrap()
+            ),
+            FredAuthorization::Denied { .. }
+        ));
     }
 }
