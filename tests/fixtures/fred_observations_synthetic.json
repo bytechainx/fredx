@@ -1,0 +1,77 @@
+{
+  "_synthetic": true,
+  "_note": "本文件为特性 005 自拟的合成样本，不是真实源数据，不构成任何证据。字段名与结构对齐 specs/adapter/fred.md 声明的事实；清单未声明源单位的序列，其 unit 取值是合成占位串，不得当作源单位事实。",
+  "records": [
+    {
+      "series_id": "WALCL",
+      "date": "2026-08-13",
+      "value": 7000000.0,
+      "unit": "Millions of U.S. Dollars",
+      "frequency": "weekly"
+    },
+    {
+      "series_id": "WTREGEN",
+      "date": "2026-08-13",
+      "value": 812345.0,
+      "unit": "Millions of U.S. Dollars",
+      "frequency": "weekly"
+    },
+    {
+      "series_id": "RRPONTSYD",
+      "date": "2026-08-14",
+      "value": 450.25,
+      "unit": "Billions of U.S. Dollars",
+      "frequency": "daily"
+    },
+    {
+      "series_id": "DFII10",
+      "date": "2026-08-14",
+      "value": 2.05,
+      "unit": "Percent",
+      "frequency": "daily"
+    },
+    {
+      "series_id": "DGS10",
+      "date": "2026-08-14",
+      "value": 4.31,
+      "unit": "Percent",
+      "frequency": "daily"
+    },
+    {
+      "series_id": "ICSA",
+      "date": "2026-08-08",
+      "value": 221000.0,
+      "unit": "Persons",
+      "frequency": "weekly"
+    },
+    {
+      "series_id": "PCEPILFE",
+      "date": "2026-06-30",
+      "value": 128.4,
+      "unit": "Index",
+      "frequency": "monthly"
+    },
+    {
+      "series_id": "UNRATE",
+      "date": "2026-06-30",
+      "value": 4.2,
+      "unit": "Percent",
+      "frequency": "monthly",
+      "vintage": "2026-07-03"
+    },
+    {
+      "series_id": "FYFSGDA188S",
+      "date": "2026-06-30",
+      "value": -6.5,
+      "unit": "Percent of GDP",
+      "frequency": "quarterly"
+    },
+    {
+      "series_id": "CPILFESL",
+      "date": "2026-06-30",
+      "value": 320.1,
+      "unit": "Index",
+      "frequency": "monthly"
+    }
+  ]
+}
