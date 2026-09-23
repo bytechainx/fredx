@@ -12,7 +12,7 @@
   权威 **171** / 声明 **171** / `公开 fn 执行 38/38`（分项 `type` 18 / `variant` 44 / `field` 18 /
   `const` 53 / `fn` 38）；单一 `#[test] e2e_fred_all_public_api`，`[dev-dependencies]` 仍为空。
   **纯测试新增，不改公开 API、不升版本**；口径边界（两级嵌套字段未登记 ⇒ 三层判据不保护、
-  derive/auto impl 不计入等）与核对命令见 `AGENTS.md`「E2E 全公开面覆盖核对」。
+  derive/auto impl 不计入等）与核对命令见 `AGENTS.md`「E2E 公开面覆盖核对（核对器口径）」。
 
 ## [0.1.1] - 2026-09-23
 
