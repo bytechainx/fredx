@@ -13,7 +13,7 @@
 //! 近义非同 ID / 写入主权 / 曲线边界 / 授权判定）。
 //!
 //! 与分点单测不同，本文件的对齐对象是 `cargo +nightly public-api --simplified` 导出的
-//! 完整公开面（171 条）：`fn` / `type` / `field` / `const` / `variant` 五类逐条登记在
+//! 公开面（核对器口径，171 条）：`fn` / `type` / `field` / `const` / `variant` 五类逐条登记在
 //! [`E2E_MANIFEST`]，运行期由 `cover` 登记表核对「声明 = 实际执行」（缺一即失败）。
 //!
 //! **独立核对**：`scripts/verify-e2e-coverage.mjs` 会重新派生公开面与清单双向 diff，并用
