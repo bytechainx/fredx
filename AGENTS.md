@@ -91,7 +91,7 @@ node scripts/verify-e2e-coverage.mjs fredx \
 ## 相关文档
 
 - 源清单（采集范围权威）：`specs/adapter/fred.md`
-- 跨源语义：`specs/005-macro-data-source-crates/contracts/cross-source-routing.md`
-- 公共形状契约：`specs/005-macro-data-source-crates/contracts/source-library-contract.md`
+- 跨源语义：`specs/features/005-macro-data-source-crates/contracts/cross-source-routing.md`
+- 公共形状契约：`specs/features/005-macro-data-source-crates/contracts/source-library-contract.md`
 - 术语与边界：`CONTEXT.md`；公开面：`docs/API.md`；能力标准：`docs/标准.md`
 - 组织 Rust 规范：`~/org-config/rulesets/rust/RULES.md`
