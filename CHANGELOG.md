@@ -3,6 +3,17 @@
 本文件记录 `fredx` 的可见变更。格式对齐 Keep a Changelog，
 版本号遵循 `docs/versioning.md`；本仓库是库 crate，`Cargo.lock` 不入库。
 
+## [Unreleased]
+
+### 新增
+
+- 新增 E2E target `tests/e2e_fred.rs`：把本仓**核对器口径内的全部公开条目**逐条真实执行 ——
+  权威公开面派生自 `cargo +nightly public-api --simplified`，核对器（带 `llvm-cov`）退出码 **0**，
+  权威 **171** / 声明 **171** / `公开 fn 执行 38/38`（分项 `type` 18 / `variant` 44 / `field` 18 /
+  `const` 53 / `fn` 38）；单一 `#[test] e2e_fred_all_public_api`，`[dev-dependencies]` 仍为空。
+  **纯测试新增，不改公开 API、不升版本**；口径边界（两级嵌套字段未登记 ⇒ 三层判据不保护、
+  derive/auto impl 不计入等）与核对命令见 `AGENTS.md`「E2E 公开面覆盖核对（核对器口径）」。
+
 ## [0.1.1] - 2026-09-23
 
 ### 修正
