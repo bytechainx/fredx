@@ -54,11 +54,14 @@ cargo package --no-verify
 ## E2E 公开面覆盖核对（核对器口径；手工，**不进 CI**）
 
 除四件套外，本仓有一条**公开面覆盖**核对：`tests/e2e_fred.rs` 必须把本仓**核对器口径内的全部公开条目**
-逐条真实执行一遍。核对器在**元仓库根目录**执行：
+逐条真实执行一遍。核对器在**工作区元仓库根目录**执行（`--root` 指向工作区根，`--crate-dir` 指向本仓实际隔离树）：
 
 ```bash
+workspace_root="$(git rev-parse --show-toplevel)"
+crate_branch='<当前开发分支或 slug>' # 替换为已创建的本仓隔离分支名或 slug
 node scripts/verify-e2e-coverage.mjs fredx \
-  --root /home/workspace/bytechainx/.worktrees/fredx \
+  --root "$workspace_root" \
+  --crate-dir "$(node scripts/worktree.mjs --root "$workspace_root" path fredx "$crate_branch")" \
   --target-dir /home/workspace/bytechainx/.cargo/wt/fredx
 ```
 
@@ -90,8 +93,8 @@ node scripts/verify-e2e-coverage.mjs fredx \
 
 ## 相关文档
 
-- 源清单（采集范围权威）：`specs/adapter/fred.md`
-- 跨源语义：`specs/features/005-macro-data-source-crates/contracts/cross-source-routing.md`
-- 公共形状契约：`specs/features/005-macro-data-source-crates/contracts/source-library-contract.md`
+- 源清单（采集范围权威）：`specs/adapter/fred.md`（工作区根）
+- 跨源语义：`specs/features/005-macro-data-source-crates/contracts/cross-source-routing.md`（工作区根）
+- 公共形状契约：`specs/features/005-macro-data-source-crates/contracts/source-library-contract.md`（工作区根）
 - 术语与边界：`CONTEXT.md`；公开面：`docs/API.md`；能力标准：`docs/标准.md`
 - 组织 Rust 规范：`~/org-config/rulesets/rust/RULES.md`
