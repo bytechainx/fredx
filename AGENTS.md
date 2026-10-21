@@ -22,7 +22,7 @@ src/
 ├── lib.rs      # crate 文档 + 模块声明 + 门面 pub use + doctest
 ├── error.rs    # FredErrorKind / FredError / FredResult
 ├── value.rs    # Date / Period / Frequency / FredUnit / FredValue / FredObservation + validate*
-├── series.rs   # 35 个 series ID 常量、分组、源单位与频率表、范围/单位/频率守卫
+├── series.rs   # 36 个 series ID 常量、分组、源单位与频率表、范围/单位/频率守卫
 ├── routing.rs  # 近义非同 ID、BAML 冻结令、写入主权、曲线边界（本域自己那一侧）
 ├── pit.rs      # publication 三元组（恒为 Date / Inferred / NotEligible）
 ├── authz.rs    # fail-closed 授权判定与只读证据登记
@@ -69,8 +69,8 @@ node scripts/verify-e2e-coverage.mjs fredx \
 - 三层判据，缺一不可：① 权威公开面由 `cargo +nightly public-api --simplified` 派生（**不采信测试自述**）；
   ② 测试内 `E2E_MANIFEST` 与权威公开面**双向 diff**（少一条 = missing、多一条 = ghost，都判红）；
   ③ `-C instrument-coverage` + `cargo-llvm-cov` **按函数**取执行次数，每条公开 `fn` 的 count 必须 > 0
-- **实测基线（2026-09-23，带 `llvm-cov`）**：退出码 **0**；权威公开条目 **171** / 清单声明 **171** /
-  `公开 fn 执行 38/38`（分项 `type` 18 / `variant` 44 / `field` 18 / `const` 53 / `fn` 38）。
+- **实测基线（2026-09-23，带 `llvm-cov`）**：退出码 **0**；权威公开条目 **172** / 清单声明 **172** /
+  `公开 fn 执行 38/38`（分项 `type` 18 / `variant` 44 / `field` 18 / `const` 54 / `fn` 38）。
   `tests/e2e_fred.rs` 为**单一** `#[test] e2e_fred_all_public_api`（8 个 phase 子函数），
   `[dev-dependencies]` 为空、无环境变量 / 无网络 / 无文件副作用；清单**逐字节等于**
   `renderManifest(authoritative)`（工具生成、非手抄）
@@ -84,7 +84,7 @@ node scripts/verify-e2e-coverage.mjs fredx \
     `Period::Month::{year,month}`、`Period::Quarter::{quarter,year}`。删字段或改名时核对器**不报**，
     只能靠**编译失败**兜底。该下界**全局存在**（`configx` 2 / `taosx` 2 / `clickhousex` 0 / `kafkax` 0）
   - **derive / auto impl 不计入**（`clone` / `eq` / `fmt` / `serialize` …）⇒ 口径实为「公开**条目**（子集）」，
-    故正确表述是「已覆盖**核对器口径内的**全部公开条目（171 条）」
+    故正确表述是「已覆盖**核对器口径内的**全部公开条目（172 条）」
   - **拒绝理由串是措辞锁**：`authorize_fred` 的多数拒绝分支断言**精确理由串**（锁在 revision `d20bdac`）。
     改文案即红 —— 这是**有意**（措辞即契约），代价是**无关重构也会变红**
   - 元组结构体的公开字段是**单级**（`FredUnit::0`），**在**口径内、必须登记（与上条的两级嵌套不同）

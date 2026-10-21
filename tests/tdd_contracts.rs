@@ -159,7 +159,7 @@ fn record(series_id: &str, date: &str, value: &str, unit: &str, frequency: &str)
     )
 }
 
-/// 35 个 series ID 常量逐字等于清单登记值（源事实防漂），且与分组集一致。
+/// 36 个 series ID 常量逐字等于清单登记值（源事实防漂），且与分组集一致。
 #[test]
 fn series_id_literals_match_the_manifest() {
     let expected: &[(&str, &str)] = &[
@@ -188,6 +188,7 @@ fn series_id_literals_match_the_manifest() {
         (fredx::IRLTLT01JPM156N, "IRLTLT01JPM156N"),
         (fredx::JPNCPIALLMINMEI, "JPNCPIALLMINMEI"),
         (fredx::DEXUSEU, "DEXUSEU"),
+        (fredx::DEXUSUK, "DEXUSUK"),
         (fredx::CPHPTT01EZM659N, "CPHPTT01EZM659N"),
         (fredx::FYFSGDA188S, "FYFSGDA188S"),
         (fredx::FDHBFRBN, "FDHBFRBN"),
@@ -199,7 +200,7 @@ fn series_id_literals_match_the_manifest() {
         (fredx::CPILFESL, "CPILFESL"),
         (fredx::JTSJOL, "JTSJOL"),
     ];
-    assert_eq!(expected.len(), 35);
+    assert_eq!(expected.len(), 36);
     for (actual, manifest) in expected {
         assert_eq!(*actual, *manifest);
     }
@@ -595,7 +596,7 @@ fn parse_rejects_non_numeric_value() {
 /// 范围判定谓词与分组集合的内部一致性。
 #[test]
 fn series_scope_predicates() {
-    assert_eq!(ALL_SERIES.len(), 35);
+    assert_eq!(ALL_SERIES.len(), 36);
     assert_eq!(
         P0_SERIES.len()
             + CURVE_SERIES.len()
@@ -607,7 +608,7 @@ fn series_scope_predicates() {
     assert_eq!(P0_SERIES.len(), 13);
     assert_eq!(CURVE_SERIES.len(), 4);
     assert_eq!(FUNDAMENTAL_SERIES.len(), 4);
-    assert_eq!(GLOBAL_REGIONAL_SERIES.len(), 12);
+    assert_eq!(GLOBAL_REGIONAL_SERIES.len(), 13);
     assert_eq!(BLS_FORWARD_SERIES.len(), 2);
 
     assert!(is_collected_series("WALCL"));

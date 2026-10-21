@@ -13,7 +13,7 @@
 //! 近义非同 ID / 写入主权 / 曲线边界 / 授权判定）。
 //!
 //! 与分点单测不同，本文件的对齐对象是 `cargo +nightly public-api --simplified` 导出的
-//! 公开面（核对器口径，171 条）：`fn` / `type` / `field` / `const` / `variant` 五类逐条登记在
+//! 公开面（核对器口径，172 条）：`fn` / `type` / `field` / `const` / `variant` 五类逐条登记在
 //! [`E2E_MANIFEST`]，运行期由 `cover` 登记表核对「声明 = 实际执行」（缺一即失败）。
 //!
 //! **独立核对**：`scripts/verify-e2e-coverage.mjs` 会重新派生公开面与清单双向 diff，并用
@@ -41,8 +41,8 @@ use fredx::{
     FredUnit, FredValue, Frequency, Period, PitEligibility, TimePrecision, ALL_SERIES,
     AUTHORITATIVE_WRITE_SERIES, BAMLC0A0CM, BAMLH0A0HYM2, BAML_ALLOWED_SERIES, BEA_TABLE_OWNER,
     BLS_FORWARD_SERIES, BOGZ1FL662090005Q, CES0500000003, CPHPTT01EZM659N, CPILFESL,
-    CURVE_BUILD_OWNER, CURVE_SERIES, DCOILWTICO, DEXCHUS, DEXJPUS, DEXUSEU, DFF, DFII10, DGS10,
-    DGS2, FDHBFRBN, FRED_DECISION_ID, FRED_SIGNED_BY, FUNDAMENTAL_SERIES, FYFSGDA188S,
+    CURVE_BUILD_OWNER, CURVE_SERIES, DCOILWTICO, DEXCHUS, DEXJPUS, DEXUSEU, DEXUSUK, DFF, DFII10,
+    DGS10, DGS2, FDHBFRBN, FRED_DECISION_ID, FRED_SIGNED_BY, FUNDAMENTAL_SERIES, FYFSGDA188S,
     GLOBAL_REGIONAL_SERIES, ICSA, IRLTLT01JPM156N, JPNCPIALLMINMEI, JTSJOL, NASDAQCOM,
     NEAR_SYNONYM_PAIRS, NIKKEI225, P0_SERIES, PAYEMS, PCEPILFE, PCOPPUSDM, RESPPLLOPNWW, RRPONTSYD,
     SOFR, SP500, T10Y2Y, T10YIE, T5YIFR, TEDRATE, UNIT_BILLIONS_OF_USD, UNIT_MILLIONS_OF_USD,
@@ -138,6 +138,7 @@ const E2E_MANIFEST: &[(&str, &str)] = &[
     ("const", "DEXCHUS"),
     ("const", "DEXJPUS"),
     ("const", "DEXUSEU"),
+    ("const", "DEXUSUK"),
     ("const", "DFF"),
     ("const", "DFII10"),
     ("const", "DGS10"),
@@ -317,12 +318,12 @@ fn expect_denied(result: FredAuthorization) -> String {
     }
 }
 
-/// 阶段 1：53 个公开常量逐条取值断言。
+/// 阶段 1：54 个公开常量逐条取值断言。
 ///
-/// 38 个 series ID 常量的契约是「字面值 == 常量名」；分组常量按清单声明的条数断言，
+/// 39 个 series ID 常量的契约是「字面值 == 常量名」；分组常量按清单声明的条数断言，
 /// 并校验分组之和 == 全集、全集无重复。
 fn phase_constants() {
-    let series_ids: [(&'static str, &'static str); 38] = [
+    let series_ids: [(&'static str, &'static str); 39] = [
         ("BAMLC0A0CM", BAMLC0A0CM),
         ("BAMLH0A0HYM2", BAMLH0A0HYM2),
         ("BOGZ1FL662090005Q", BOGZ1FL662090005Q),
@@ -333,6 +334,7 @@ fn phase_constants() {
         ("DEXCHUS", DEXCHUS),
         ("DEXJPUS", DEXJPUS),
         ("DEXUSEU", DEXUSEU),
+        ("DEXUSUK", DEXUSUK),
         ("DFF", DFF),
         ("DFII10", DFII10),
         ("DGS10", DGS10),
@@ -374,11 +376,11 @@ fn phase_constants() {
     hit("const", "FUNDAMENTAL_SERIES");
     assert_eq!(FUNDAMENTAL_SERIES.len(), 4);
     hit("const", "GLOBAL_REGIONAL_SERIES");
-    assert_eq!(GLOBAL_REGIONAL_SERIES.len(), 12);
+    assert_eq!(GLOBAL_REGIONAL_SERIES.len(), 13);
     hit("const", "BLS_FORWARD_SERIES");
     assert_eq!(BLS_FORWARD_SERIES.len(), 2);
     hit("const", "ALL_SERIES");
-    assert_eq!(ALL_SERIES.len(), 35);
+    assert_eq!(ALL_SERIES.len(), 36);
     assert_eq!(
         P0_SERIES.len()
             + CURVE_SERIES.len()
