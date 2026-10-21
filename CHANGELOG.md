@@ -9,10 +9,18 @@
 
 - 新增 E2E target `tests/e2e_fred.rs`：把本仓**核对器口径内的全部公开条目**逐条真实执行 ——
   权威公开面派生自 `cargo +nightly public-api --simplified`，核对器（带 `llvm-cov`）退出码 **0**，
-  权威 **171** / 声明 **171** / `公开 fn 执行 38/38`（分项 `type` 18 / `variant` 44 / `field` 18 /
-  `const` 53 / `fn` 38）；单一 `#[test] e2e_fred_all_public_api`，`[dev-dependencies]` 仍为空。
+  权威 **172** / 声明 **172** / `公开 fn 执行 38/38`（分项 `type` 18 / `variant` 44 / `field` 18 /
+  `const` 54 / `fn` 38）；单一 `#[test] e2e_fred_all_public_api`，`[dev-dependencies]` 仍为空。
   **纯测试新增，不改公开 API、不升版本**；口径边界（两级嵌套字段未登记 ⇒ 三层判据不保护、
   derive/auto impl 不计入等）与核对命令见 `AGENTS.md`「E2E 公开面覆盖核对（核对器口径）」。
+
+## [0.2.0] - 2026-10-21
+
+### 新增
+
+- 采集集合纳入 `DEXUSUK`（GBPUSD；Board H.10 经 FRED；≠ 已退役 BoE `XUDLUSS`），落实
+  `MACRO-OWNER-2026-10-20-Q2` / P28 与 `specs/inputs/adapter/fred.md` 清单接线；
+  纯 FRED ID 35→36，全球与区域组 12→13；公开常量 +1（核对器口径 171→172 / `const` 53→54）。
 
 ## [0.1.1] - 2026-09-23
 

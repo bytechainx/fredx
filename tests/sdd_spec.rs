@@ -62,10 +62,10 @@ fn collect_src_rs(root: &std::path::Path, out: &mut Vec<std::path::PathBuf>) {
     }
 }
 
-/// S-1：采集集合为 35 个纯 FRED ID；`WRESBAL` 为 mapping-only；范围外 ID 被拒。
+/// S-1：采集集合为 36 个纯 FRED ID；`WRESBAL` 为 mapping-only；范围外 ID 被拒。
 #[test]
 fn assert_source_scope() {
-    assert_eq!(ALL_SERIES.len(), 35);
+    assert_eq!(ALL_SERIES.len(), 36);
     assert!(is_collected_series("WALCL"));
     assert!(!is_collected_series("WRESBAL"));
     assert!(is_mapping_only_series("WRESBAL"));

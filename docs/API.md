@@ -23,10 +23,10 @@
 
 | 入口 | 语义 |
 | --- | --- |
-| 35 个 series ID 常量 | 清单明确列出的纯 FRED ID（`fredx::WALCL`、`fredx::DFII10` …） |
+| 36 个 series ID 常量 | 清单明确列出的纯 FRED ID（`fredx::WALCL`、`fredx::DFII10` …） |
 | `WRESBAL` / `BAMLC0A0CM` / `RESPPLLOPNWW` | 非采集登记：mapping-only / 已 drop / 归属未决 |
 | `P0_SERIES` `CURVE_SERIES` `FUNDAMENTAL_SERIES` `GLOBAL_REGIONAL_SERIES` `BLS_FORWARD_SERIES` | 分组常量集 |
-| `ALL_SERIES` | 采集集合全集（35 个） |
+| `ALL_SERIES` | 采集集合全集（36 个） |
 | `AUTHORITATIVE_WRITE_SERIES` | 权威写入唯一归本域的四条序列 |
 | `BAML_ALLOWED_SERIES` | 冻结令下允许的唯一 BAML 系列 |
 | `UNIT_MILLIONS_OF_USD` / `UNIT_BILLIONS_OF_USD` | 清单声明的两个源单位字面量 |

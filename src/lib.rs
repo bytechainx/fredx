@@ -21,7 +21,7 @@
 //!
 //! | 能力 | 状态 |
 //! | --- | --- |
-//! | series ID 常量与分组（35 个纯 FRED ID + mapping-only 登记） | 已落（离线） |
+//! | series ID 常量与分组（36 个纯 FRED ID + mapping-only 登记） | 已落（离线） |
 //! | 源单位 / 频率一致性守卫（拒绝把 Billions 当 Millions） | 已落 |
 //! | 权威写入主权判定与越权写入拒绝（`WALCL`/`WTREGEN`/`RRPONTSYD`/`WRESBAL`） | 已落（只读判定） |
 //! | 近义非同 ID 守卫（涉 FRED 的 14 对） | 已落 |
@@ -117,7 +117,8 @@ pub use series::{
 // series ID 常量：源事实的一等公民，直接暴露在门面上（也可经 `fredx::series` 访问）。
 pub use series::{
     BAMLC0A0CM, BAMLH0A0HYM2, BOGZ1FL662090005Q, CES0500000003, CPHPTT01EZM659N, CPILFESL,
-    DCOILWTICO, DEXCHUS, DEXJPUS, DEXUSEU, DFF, DFII10, DGS10, DGS2, FDHBFRBN, FYFSGDA188S, ICSA,
+    DCOILWTICO, DEXCHUS, DEXJPUS, DEXUSEU, DEXUSUK, DFF, DFII10, DGS10, DGS2, FDHBFRBN, FYFSGDA188S,
+    ICSA,
     IRLTLT01JPM156N, JPNCPIALLMINMEI, JTSJOL, NASDAQCOM, NIKKEI225, PAYEMS, PCEPILFE, PCOPPUSDM,
     RESPPLLOPNWW, RRPONTSYD, SOFR, SP500, T10Y2Y, T10YIE, T5YIFR, TEDRATE, UNRATE, VIXCLS, WALCL,
     WRESBAL, WTREGEN,

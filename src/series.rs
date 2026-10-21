@@ -79,6 +79,8 @@ pub const IRLTLT01JPM156N: &str = "IRLTLT01JPM156N";
 pub const JPNCPIALLMINMEI: &str = "JPNCPIALLMINMEI";
 /// EURUSD。
 pub const DEXUSEU: &str = "DEXUSEU";
+/// GBPUSD（Board H.10 经 FRED；**≠ 已退役 BoE `XUDLUSS`**；Q2/P28）。
+pub const DEXUSUK: &str = "DEXUSUK";
 /// 欧元区 HICP（月频）。
 pub const CPHPTT01EZM659N: &str = "CPHPTT01EZM659N";
 /// 美国赤字/GDP（季频）。
@@ -143,12 +145,13 @@ pub const CURVE_SERIES: &[&str] = &[DGS2, DGS10, T5YIFR, TEDRATE];
 /// 经济基本面组（4 个）。
 pub const FUNDAMENTAL_SERIES: &[&str] = &[PCEPILFE, UNRATE, PAYEMS, CES0500000003];
 
-/// 全球与区域组（12 个）。
+/// 全球与区域组（13 个）。
 pub const GLOBAL_REGIONAL_SERIES: &[&str] = &[
     DEXJPUS,
     IRLTLT01JPM156N,
     JPNCPIALLMINMEI,
     DEXUSEU,
+    DEXUSUK,
     CPHPTT01EZM659N,
     FYFSGDA188S,
     FDHBFRBN,
@@ -162,7 +165,7 @@ pub const GLOBAL_REGIONAL_SERIES: &[&str] = &[
 /// BLS 转发闭合组（2 个）。
 pub const BLS_FORWARD_SERIES: &[&str] = &[CPILFESL, JTSJOL];
 
-/// 采集集合全集（35 个纯 FRED series ID，来自清单明确列出的行）。
+/// 采集集合全集（36 个纯 FRED series ID，来自清单明确列出的行）。
 pub const ALL_SERIES: &[&str] = &[
     DFII10,
     T10YIE,
@@ -189,6 +192,7 @@ pub const ALL_SERIES: &[&str] = &[
     IRLTLT01JPM156N,
     JPNCPIALLMINMEI,
     DEXUSEU,
+    DEXUSUK,
     CPHPTT01EZM659N,
     FYFSGDA188S,
     FDHBFRBN,
@@ -210,7 +214,7 @@ pub const AUTHORITATIVE_WRITE_SERIES: &[&str] = &[WALCL, WTREGEN, RRPONTSYD, WRE
 /// BAML 冻结令允许的**唯一** BAML 系列。
 pub const BAML_ALLOWED_SERIES: &[&str] = &[BAMLH0A0HYM2];
 
-/// 该 ID 是否在**采集集合**内（35 个纯 FRED ID）。
+/// 该 ID 是否在**采集集合**内（36 个纯 FRED ID）。
 #[must_use]
 pub fn is_collected_series(series_id: &str) -> bool {
     ALL_SERIES.contains(&series_id)
@@ -260,7 +264,7 @@ pub fn series_frequency(series_id: &str) -> Option<Frequency> {
         | CPHPTT01EZM659N | FDHBFRBN | PCOPPUSDM | CPILFESL | JTSJOL => Frequency::Monthly,
         FYFSGDA188S | BOGZ1FL662090005Q => Frequency::Quarterly,
         DFII10 | T10YIE | BAMLH0A0HYM2 | T10Y2Y | RRPONTSYD | SOFR | DFF | VIXCLS | SP500
-        | DCOILWTICO | DGS2 | DGS10 | T5YIFR | TEDRATE | DEXJPUS | DEXUSEU | NASDAQCOM
+        | DCOILWTICO | DGS2 | DGS10 | T5YIFR | TEDRATE | DEXJPUS | DEXUSEU | DEXUSUK | NASDAQCOM
         | NIKKEI225 | DEXCHUS => Frequency::Daily,
         _ => return None,
     };
@@ -334,8 +338,8 @@ mod tests {
 
     #[test]
     fn collection_set_is_the_manifest_scope() {
-        // 35 = 13（P0）+ 4（曲线）+ 4（基本面）+ 12（全球区域）+ 2（BLS 转发）。
-        assert_eq!(ALL_SERIES.len(), 35);
+        // 36 = 13（P0）+ 4（曲线）+ 4（基本面）+ 13（全球区域）+ 2（BLS 转发）。
+        assert_eq!(ALL_SERIES.len(), 36);
         assert_eq!(
             P0_SERIES.len()
                 + CURVE_SERIES.len()
