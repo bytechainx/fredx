@@ -264,8 +264,8 @@ pub fn series_frequency(series_id: &str) -> Option<Frequency> {
         | CPHPTT01EZM659N | FDHBFRBN | PCOPPUSDM | CPILFESL | JTSJOL => Frequency::Monthly,
         FYFSGDA188S | BOGZ1FL662090005Q => Frequency::Quarterly,
         DFII10 | T10YIE | BAMLH0A0HYM2 | T10Y2Y | RRPONTSYD | SOFR | DFF | VIXCLS | SP500
-        | DCOILWTICO | DGS2 | DGS10 | T5YIFR | TEDRATE | DEXJPUS | DEXUSEU | DEXUSUK | NASDAQCOM
-        | NIKKEI225 | DEXCHUS => Frequency::Daily,
+        | DCOILWTICO | DGS2 | DGS10 | T5YIFR | TEDRATE | DEXJPUS | DEXUSEU | DEXUSUK
+        | NASDAQCOM | NIKKEI225 | DEXCHUS => Frequency::Daily,
         _ => return None,
     };
     Some(frequency)
