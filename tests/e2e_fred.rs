@@ -270,7 +270,7 @@ fn assert_manifest_wellformed() {
         );
         assert!(seen.insert((kind, id)), "清单重复条目：{kind} {id}");
     }
-    assert!(!E2E_MANIFEST.is_empty(), "清单不得为空");
+    assert!(!seen.is_empty(), "清单不得为空");
 }
 
 /// 收尾断言：声明集合与执行集合必须**双向相等**。
