@@ -9,7 +9,7 @@ FRED 源事实库：系列 ID 常量、源单位与频率、跨源守卫、离�
 
 ## 技术栈
 
-- Rust edition 2021，`rust-version = "1.71"`（由依赖 `rust_version` 最大值推导，见 `CONTEXT.md`）
+- Rust edition 2021，`rust-version = "1.77"`（由依赖 `rust_version` 最大值推导，见 `CONTEXT.md`）
 - 依赖仅 `thiserror` 2、`serde` 1（`derive`）、`serde_json` 1
 - **零内部耦合**：不依赖任何 `bytechainx/*` crate；MUST NOT 出现 `path = "../…"`
 - crate 级 lint：`unwrap_used` / `expect_used` / `panic` / `unreachable` / `todo` /
