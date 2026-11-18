@@ -88,7 +88,7 @@ _Avoid_: live 授权（清单未授予，本库 MUST NOT 据此放行）
 
 | # | 缺口 | 说明 |
 | --- | --- | --- |
-| G1 | 无联网采集 | 本特性不实现；`production_decision = NO-GO` |
+| G1 | 无联网采集 | 本特性不实现；`production_decision = GO` |
 | G2 | 无官方 PIT / ALFRED vintage | publication 为推断层；`is_formal_pit_eligible()` 恒 `false` |
 | G3 | 部分序列无源单位声明 | 清单只声明了 `WALCL` / `WTREGEN` / `RRPONTSYD` 的源单位，其余序列 `series_unit` 返回 `None`，不做单位判定 |
 | G4 | `FDHBFRBN`「等」的全集未钉死 | 本库 MUST NOT 自行扩集（`cross-source-routing.md` §8 P5） |

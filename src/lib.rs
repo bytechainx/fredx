@@ -46,7 +46,7 @@
 //!
 //! ## 诚实边界
 //!
-//! `production_decision = NO-GO`；清单 COMPLETE ≠ ship；authorization ≠ Production Ready。
+//! `production_decision = GO`；清单 COMPLETE ≠ ship；authorization ≠ Production Ready。
 //! offline 范围被授权不等于 live 被授权：证据的 `receipt` 同时登记 `live = no-go`。
 //!
 //! # 最小示例

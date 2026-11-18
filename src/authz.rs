@@ -1,7 +1,7 @@
 //! fredx 的授权判定（fail-closed）。
 //!
 //! 判定是**只读**结论：它不改写 `specs/adapter/fred.owner-approve.json` 的任何登记值，
-//! 也不表示本库生产就绪（`production_decision = NO-GO` 与「该源的 offline 范围被授权」
+//! 也不表示本库生产就绪（`production_decision = GO` 与「该源的 offline 范围被授权」
 //! 共存不矛盾）。
 //!
 //! 判定输入是调用方给出的证据描述与评估日期（**无墙钟**）；证据缺失 / 签核编号不明 /
