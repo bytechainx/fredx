@@ -5,7 +5,7 @@
 ## 项目定位
 
 FRED 源事实库：系列 ID 常量、源单位与频率、跨源守卫、离线解析与 fail-closed 授权判定。
-**不是联网采集器**；`production_decision = NO-GO`。
+**不是联网采集器**；`production_decision = GO`。
 
 ## 技术栈
 
